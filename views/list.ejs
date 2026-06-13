@@ -1,0 +1,22 @@
+<%- include('header'); -%>
+
+<body>
+  <div class="box" id="heading">
+    <h1><%= titlePage %> </h1>
+  </div>
+  <div class="box">
+    <% toDoListItems.forEach(function(toDoListItem){ %>
+      <form class="" action="/delete" method="post">
+        <div class="item">
+          <input type="checkbox" name="checkbox" value="<%= toDoListItem._id %>" onChange="this.form.submit()">
+          <p><%= toDoListItem.itemName %></p>
+        </div>
+      </form>
+  <%  }) %>
+    <form class="form-item" action="/" method="post">
+      <input type="text" name="newItem" placeholder="New Item" autocomplete="false">
+      <button type="submit" name="list" value="<%= titlePage %>">+</button>
+    </form>
+  </div>
+
+  <%- include('footer'); -%>
