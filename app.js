@@ -6,7 +6,13 @@ const mongoose = require("mongoose");
 const dbURL = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 3000;
 
+if (!dbURL) {
+  console.error("FATAL: MONGODB_URI is not set. Configure it in App Service > Environment variables.");
+  process.exit(1);
+}
+
 const app = express();
+app.set("trust proxy", 1);
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -105,8 +111,8 @@ app.get('/about', function(req, res){
 
 app.get('/health', (req, res) => res.status(200).send('ok'));
 
-app.listen(PORT, function(){
-  console.log("The server is live");
+app.listen(PORT, '0.0.0.0', function(){
+  console.log(`Live on ${PORT}`);
 });
 
 module.exports = app;
